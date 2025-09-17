@@ -4,14 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:HEC.FDA.View.Results"
-             xmlns:util="clr-namespace:HEC.FDA.View.Utilities"
              xmlns:utilVM="clr-namespace:HEC.FDA.ViewModel.Utilities;assembly=HEC.FDA.ViewModel"
              xmlns:twp="clr-namespace:HEC.FDA.View.TableWithPlot"
              xmlns:results="clr-namespace:HEC.FDA.ViewModel.Results;assembly=HEC.FDA.ViewModel"
+             xmlns:cmds="clr-namespace:HEC.FDA.View.Commands"
              d:DataContext="{d:DesignInstance Type=results:ScenarioDamageSummaryVM}"
              mc:Ignorable="d"
              d:DesignHeight="450"
              d:DesignWidth="800">
+  <UserControl.Resources>
+    <cmds:CloseCommand x:Key="closeCommand" />
+  </UserControl.Resources>
   <Grid>
 
     <Grid.RowDefinitions>
@@ -395,6 +398,26 @@
 
       </Grid>
     </ScrollViewer>
-    <util:CloseControl Grid.Row="1" />
+    <Grid Grid.Row="1">
+      <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Right"
+                  Margin="0,0,5,0">
+        <Button Content="Export"
+                Margin="5,5,2,5"
+                Width="60"
+                Height="22"
+                Command="{Binding ExportToExcelCommand}" />
+        <Button Content="Close"
+                Margin="2,5,5,5"
+                Width="40"
+                Height="22"
+                IsCancel="True"
+                Command="{Binding Source={StaticResource closeCommand}}">
+          <Button.CommandParameter>
+            <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType=Window}" />
+          </Button.CommandParameter>
+        </Button>
+      </StackPanel>
+    </Grid>
   </Grid>
 </UserControl>
